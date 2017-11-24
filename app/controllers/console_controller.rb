@@ -40,7 +40,7 @@ class ConsoleController < Sinatra::Base
 
   get '/consoles/:id' do
   if logged_in?
-    @console = Console.find_by(id: params[:id], user_id: session[:id])
+    @console = Console.find_by(id: params[:id], user_id: @current_user.id)
     erb :'consoles/show'
   else
     redirect '/login'
@@ -49,7 +49,7 @@ end
 
   get '/consoles/:id/edit' do
     if logged_in?
-      @console = Console.find_by(id: params[:id], user_id: session[:id])
+      @console = Console.find_by(id: params[:id], user_id: @current_user.id)
       erb :'consoles/edit'
     else
       redirect '/login'
@@ -65,8 +65,8 @@ end
 
   delete '/consoles/:id/delete' do
     if logged_in?
-      @console = Console.find_by(id: params[:id], user_id: session[:id])
-      @tweet.delete
+      @console = Console.find_by(id: params[:id], user_id: @current_user.id)
+      @console.delete
       redirect to '/consoles'
     else
       redirect '/login'
