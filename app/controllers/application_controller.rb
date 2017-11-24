@@ -31,7 +31,7 @@ class ApplicationController < Sinatra::Base
       session[:id] = @user.id
       redirect "/users/#{@user.id}"
     else
-      flash[:message] = "Error! Username or Password cannot be empty!"
+      flash[:message] = "Error! Neither Username nor Password cannot be empty!"
       redirect '/signup'
     end
   end
