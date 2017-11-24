@@ -9,3 +9,11 @@
    <% end %>
   <% end %>
 </ul>
+
+<p><a href="/consoles/<%= @console.id %>/edit">Rename this console</a></p>
+
+<p>Remove this console from your collection:</p>
+<form action="/consoles/<%= @console.id %>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit"  value="Remove Console">
+</form>
