@@ -24,7 +24,17 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-
+  post '/signup' do
+    @user = User.new(username: params[:username], password: params[:password])
+    if @user.valid?
+      @user.save
+      session[:id] = @user.id
+      redirect "/users/#{@user.id}"
+    else
+      flash[:message] = "Error! Username or Password cannot be empty!"
+      redirect '/signup'
+    end
+  end
 
     helpers do
       def logged_in?
