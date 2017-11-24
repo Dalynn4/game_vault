@@ -13,7 +13,11 @@ class ApplicationController < Sinatra::Base
 
 
   get '/' do
+    if logged_in?
+      redirect "/users/#{@current_user.id}"
+    else
     erb :'users/index'
+    end
   end
 
   get '/signup' do
@@ -38,7 +42,7 @@ class ApplicationController < Sinatra::Base
 
   get '/login' do
     if  logged_in?
-      redirect "/users/#{@user.id}"
+      redirect "/users/#{@current_user.id}"
     else
       erb :'users/login'
     end
@@ -47,8 +51,8 @@ class ApplicationController < Sinatra::Base
   post '/login' do
     @user = User.find_by(:username => params[:username])
 
-    if @user.valid? && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
+    if @user && @user.authenticate(params[:password])
+      session[:id] = @user.id
       redirect "/users/#{@user.id}"
     else
       flash[:message] = "Error! Username or Password does not match!"
@@ -67,8 +71,17 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/:id' do
-    @user =  User.find(params[:id])
-    erb :'users/show'
+    if logged_in?
+      if @current_user.id == User.find(params[:id]).id
+        @user =  User.find(params[:id])
+        erb :'users/show'
+      else
+        flash[:message] = "Cannot view another users page!"
+        redirect "/users/#{session[:id]}"
+      end
+    else
+      redirect '/login'
+    end
   end
 
 
