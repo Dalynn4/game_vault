@@ -1,0 +1,13 @@
+<h1>Hello, <%= @current_user.username %>!</h1>
+<h2>Here is a list of the games you own:</h2>
+
+
+<ul>
+  <% Game.all.each do |game| %>
+   <% if game.user_id == @current_user.id %>
+     <li>Name:<%= game.name %>Console:<%= Console.find_by(id: game.console_id).name</li>
+   <% end %>
+  <% end %>
+</ul>
+
+<p><a href="/games/new">Add a game to your collection!</a></p>

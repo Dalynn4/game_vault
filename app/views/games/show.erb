@@ -1,0 +1,15 @@
+<h1><%= @game.name %></h1>
+
+<h3>You own this game for the <%= Console.find_by(id: @game.console.id).name %> system.</h3>
+
+
+
+<br></br>
+<br></br>
+<p><a href="/consoles/<%= @console.id %>/edit">Rename this game</a></p>
+
+<p>Remove this game from your collection:</p>
+<form action="/games/<%= @game.id %>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit"  value="Remove Game">
+</form>
