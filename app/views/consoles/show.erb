@@ -1,0 +1,7 @@
+<ul>
+  <% Console.all.each do |console| %>
+   <% if console.user_id == @user.id %>
+     <li><%= console.name %></li>
+   <% end %>
+  <% end %>
+</ul>

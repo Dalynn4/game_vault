@@ -59,10 +59,16 @@ class ApplicationController < Sinatra::Base
   get '/logout' do
     if logged_in?
       session.clear
+      flash[:message] = "Logout Successful"
       redirect '/login'
     else
       redirect '/'
     end
+  end
+
+  get '/users/:id' do
+    @user =  User.find(params[:id])
+    erb :'users/show'
   end
 
 
