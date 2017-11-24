@@ -36,6 +36,27 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  get '/login' do
+    if  logged_in?
+      redirect "/users/#{@user.id}"
+    else
+      erb :'users/login'
+    end
+  end
+
+  post '/login' do
+    @user = User.find_by(:username => params[:username])
+
+    if @user.valid? && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect "/users/#{@user.id}"
+    else
+      flash[:message] = "Error! Username or Password does not match!"
+      redirect "/login"
+    end
+  end
+
+
     helpers do
       def logged_in?
         !!current_user
