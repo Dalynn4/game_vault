@@ -38,6 +38,15 @@ class ConsoleController < Sinatra::Base
     end
   end
 
+  get '/consoles/:id'
+  if logged_in?
+    @console = Console.find_by(id: params[:id], user_id: session[:id])
+    erb :'consoles/show'
+  else
+    redirect '/login'
+  end
+end
+
 
 
 
