@@ -1,0 +1,13 @@
+<h1>Hello, <%= @current_user.username %>!</h1>
+<h2>Here is a list of the consoles you own:</h2>
+    <p>You can select a console to see all the games you own for that console.</p>
+
+<ul>
+  <% Console.all.each do |console| %>
+   <% if console.user_id == @current_user.id %>
+     <li><a href="/console/#{console.id}"><%= console.name %></a></li>
+   <% end %>
+  <% end %>
+</ul>
+
+<p><a href="/console/new">Add a console to your collection</a></p>
