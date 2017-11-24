@@ -38,7 +38,7 @@ class ConsoleController < Sinatra::Base
     end
   end
 
-  get '/consoles/:id'
+  get '/consoles/:id' do
   if logged_in?
     @console = Console.find_by(id: params[:id], user_id: session[:id])
     erb :'consoles/show'
@@ -47,9 +47,21 @@ class ConsoleController < Sinatra::Base
   end
 end
 
+get '/consoles/:id/edit' do
+  if logged_in?
+    @console = Console.find_by(id: params[:id], user_id: session[:id])
+    erb :'consoles/edit'
+  else
+    redirect '/login'
+  end
+end
 
-
-
+patch '/consoles/:id' do
+  @console = Console.find_by(id: params[:id], user_id: session[:id])
+  @console.name = params[:name]
+  @console.save
+  redirect to "/consoles/#{@console.id}"
+end
 
   helpers do
     def logged_in?

@@ -5,7 +5,7 @@
 <ul>
   <% Console.all.each do |console| %>
    <% if console.user_id == @current_user.id %>
-     <li><a href="/console/#{console.id}"><%= console.name %></a></li>
+     <li><a href="/consoles/<%= console.id %>"><%= console.name %></a></li>
    <% end %>
   <% end %>
 </ul>

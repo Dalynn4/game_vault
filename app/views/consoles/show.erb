@@ -3,7 +3,7 @@
 <h3>Here are the games you own for this console:</h3>
 
 <ul>
-  <% Games.all.each do |game| %>
+  <% Game.all.each do |game| %>
    <% if game.user_id == @current_user.id %>
      <li><%= game.name %></li>
    <% end %>
