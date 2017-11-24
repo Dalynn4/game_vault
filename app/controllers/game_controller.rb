@@ -28,10 +28,10 @@ class GameController < Sinatra::Base
   end
 
   post '/games' do
-    @game = Game.new(name: params[:name], user_id: session[:id])
+    @game = Game.new(name: params[:name], user_id: session[:id], console_id: params[:console_id])
     if @game.valid?
       @game.save
-      redirect "/consoles"
+      redirect "/games"
     else
       flash[:message] = "Error! Game must have a name!"
       redirect '/games/new'
@@ -40,7 +40,7 @@ class GameController < Sinatra::Base
 
   get '/games/:id' do
   if logged_in?
-    @games = Game.find_by(id: params[:id], user_id: @current_user.id)
+    @game = Game.find_by(id: params[:id], user_id: @current_user.id)
     erb :'games/show'
   else
     redirect '/login'
@@ -49,7 +49,7 @@ end
 
   get '/games/:id/edit' do
     if logged_in?
-      @games = games.find_by(id: params[:id], user_id: @current_user.id)
+      @game = games.find_by(id: params[:id], user_id: @current_user.id)
       erb :'games/edit'
     else
       redirect '/login'
@@ -65,7 +65,7 @@ end
 
   delete '/games/:id/delete' do
     if logged_in?
-      @game = game.find_by(id: params[:id], user_id: @current_user.id)
+      @game = Game.find_by(id: params[:id], user_id: @current_user.id)
       @game.delete
       redirect to '/games'
     else

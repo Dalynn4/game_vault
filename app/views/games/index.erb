@@ -5,7 +5,7 @@
 <ul>
   <% Game.all.each do |game| %>
    <% if game.user_id == @current_user.id %>
-     <li>Name:<%= game.name %>Console:<%= Console.find_by(id: game.console_id).name</li>
+     <li>Name: <a href="/games/<%= game.id %>"><%= game.name %></a> Console: <%= Console.find_by(:id => game.console_id).name %></li>
    <% end %>
   <% end %>
 </ul>

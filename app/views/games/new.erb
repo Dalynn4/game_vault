@@ -5,5 +5,18 @@
 <h3>Congratulations on your new game! Add it to your Vault!</h3>
 <form action="/games" method="POST">
 	<input type="text" name="name" placeholder="Game name:">
+  <label>Which console did you purchase this game for?</label>
+
+  <br></br>
+
+   <% Console.all.each do |console| %>
+     <% if console.user_id == @current_user.id %>
+     <input type="checkbox" name="console_id" id="<%=console.id%>" value="<%=console.id%>"><%=console.name%></input>
+   <%end%>
+
+     <% end %>
+
+  </ul>
+
 	<input type="submit" id="submit" value="Add to Vault!">
 </form>
