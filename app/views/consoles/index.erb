@@ -1,3 +1,7 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1>Hello, <%= @current_user.username %>!</h1>
 <h2>Here is a list of the consoles you own:</h2>
     <p>You can select a console to see all the games you own for that console.</p>
@@ -11,3 +15,4 @@
 </ul>
 
 <p><a href="/consoles/new">Add a console to your collection</a></p>
+<p><a href="/users/:id">Go back to your user page.</a></p>

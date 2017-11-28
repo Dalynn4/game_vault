@@ -41,7 +41,12 @@ class ConsoleController < Sinatra::Base
   get '/consoles/:id' do
   if logged_in?
     @console = Console.find_by(id: params[:id], user_id: @current_user.id)
-    erb :'consoles/show'
+    if @console
+      erb :'consoles/show'
+    else
+      flash[:message] = "This console does not exist or is in another users collection."
+      redirect '/consoles'
+    end
   else
     redirect '/login'
   end
@@ -50,7 +55,12 @@ end
   get '/consoles/:id/edit' do
     if logged_in?
       @console = Console.find_by(id: params[:id], user_id: @current_user.id)
-      erb :'consoles/edit'
+      if @console
+        erb :'consoles/show'
+      else
+        flash[:message] = "This console does not exist or is in another users collection."
+        redirect '/consoles'
+      end
     else
       redirect '/login'
     end
